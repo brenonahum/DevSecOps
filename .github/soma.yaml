@@ -1,22 +1,19 @@
-name: 'Soma'
-description: 'Soma'
-inputs:
-  a:
-    required: true
-  b:
-    required: true
-runs:
-  using: 'composite'
-  steps:
+import argparse
 
-    - name: Checkout repository content
-      uses: actions/checkout@v2
+if __name__ == '__main__':
 
-    - name: setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'  
-    
-    - name: run Soma
-      shell: bash
-      run: python soma.py -a=${{ inputs.a }} -b=${{ inputs.b }}
+  parser = argparse.ArgumentParser(
+        usage='%(prog)s --a a--b b',
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+  parser.add_argument("-a", "--a",type=str, required=True)
+  parser.add_argument("-b", "--b",type=str, required=True)
+
+  args = parser.parse_args()
+
+  a=args.a
+  b=args.b
+
+  soma=int(a)+int(b)
+
+  print(soma)
